@@ -70,7 +70,7 @@ class CFLint(Linter):
         return jar_file
 
     def get_config_path(self):
-        """Return a tuple containing main config file and additional config paths"""
+        """Return a tuple containing main config file and additional config paths."""
         settings = self.get_view_settings()
         config_file_name = settings.get('config_file_name')
         aux_config_dirs = settings.get('aux_config_dirs')
