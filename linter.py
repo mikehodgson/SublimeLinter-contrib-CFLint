@@ -80,3 +80,4 @@ class CFLint(Linter):
             config_file_tuple += (conf,)
 
         return config_file_tuple
+        
