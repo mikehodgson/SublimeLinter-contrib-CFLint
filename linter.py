@@ -53,27 +53,13 @@ class CFLint(Linter):
         'aux_config_dirs': []
     }
 
-    def __init__(self, view, syntax):
-        """Override init to dynamically set config_file."""
-
-        Linter.__init__(self, view, syntax)
-
-        settings = self.get_view_settings()
-        config_file_name = settings.get('config_file_name')
-        aux_config_dirs = settings.get('aux_config_dirs')
-        config_file_tuple = ('-configfile', config_file_name)
-
-        for conf in aux_config_dirs:
-            config_file_tuple += (conf,)
-
-        self.config_file = config_file_tuple
-
     def cmd(self):
         """Return the command line to execute."""
 
         jar_file = self.get_jarfile_path()
+        config_file = self.get_config_path()
 
-        return [self.executable_path, '-jar', jar_file, '-file', '@', '-q', '-text']
+        return [self.executable_path, '-jar', jar_file, '-configfile', config_file, '-file', '@', '-q', '-text']
 
     def get_jarfile_path(self):
         """Return the absolute path to the CFLint jar file."""
@@ -82,3 +68,14 @@ class CFLint(Linter):
         jar_file = settings.get('jar_file')
 
         return jar_file
+
+    def get_config_path(self):
+        settings = self.get_view_settings()
+        config_file_name = settings.get('config_file_name')
+        aux_config_dirs = settings.get('aux_config_dirs')
+        config_file_tuple = (config_file_name)
+
+        for conf in aux_config_dirs:
+            config_file_tuple += (conf,)
+
+        return config_file_tuple
